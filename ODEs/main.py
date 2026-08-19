@@ -231,3 +231,5 @@ if __name__ == "__main__":
         exportto=args.exportto,
         openonsave=not args.noopen,
     )
+    
+    # $ python main.py 60 60 0.03 240
