@@ -19,7 +19,7 @@ import opinf
 
 
 __MAXOPTVAL = 1e12  # Ceiling for optimization.
-__DEFAULT_SEARCH_GRID = np.logspace(-16, 4, 81)  # Search grid.
+__DEFAULT_SEARCH_GRID = np.logspace(-5, 10, 81)  # Search grid.
 
 
 def _posterior_autoregularized_multisample(
@@ -163,7 +163,9 @@ def _posterior_autoregularized_multisample(
         logging.info(message)
 
     # Follow up grid search with minimization-based search.
-    print("1D OPTIMIZATION")
+    # print("1D OPTIMIZATION")
+    print("Bayesian Optimization with regularization hyperparameter search bounds: ")
+    print(f"  {search_bounds[0]:.4e} to {search_bounds[1]:.4e}")
     opt_result = opt.minimize_scalar(
         _training_error, method="bounded", bounds=np.log10(search_bounds)
     )

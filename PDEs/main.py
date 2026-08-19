@@ -22,7 +22,7 @@ def main(
     num_regression_points: int,
     numPODmodes: list[int],
     gp_regularizer: float = 1e-8,
-    ndraws: int = 100,
+    ndraws: int = 100,               # Posterior draws to sample.
     exportto: str = None,
     openonsave: bool = True,
     ddtdata: bool = False,
@@ -34,7 +34,7 @@ def main(
     training_span : (float, float)
         Time domain over which to sample solution data.
     num_samples : int > 0
-        Number of snapshots to sample.
+        Number of snapshots to sample (randomly, e.g., from uniform distribution) from the training span.
     noiselevel : float >= 0
         Percentage of noise applied to the training snapshots.
     num_regression_points : int > 0
@@ -289,7 +289,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "num_regression_points",
         type=int,
-        help="number of points to use in the OpInf regression0",
+        help="number of points to use in the OpInf regression",
     )
     parser.add_argument(
         "numPODmodes",
@@ -318,7 +318,7 @@ if __name__ == "__main__":
         action="store_true",
         help="do not open figures automatically",
     )
-    parser.add_argument(
+    parser.add_argument(  
         "--ddtdata",
         action="store_true",
         help="save data for visualizing derivative estimates",
@@ -327,9 +327,9 @@ if __name__ == "__main__":
     args = parser.parse_args()
     main(
         training_span=[0, args.t_max],
-        num_samples=args.num_samples,
+        num_samples=args.num_samples,   # number of points for the OpInf regression (time steps)
         noiselevel=args.noiselevel,
-        num_regression_points=args.num_regression_points,
+        num_regression_points=args.num_regression_points,   # number of GP regression points
         numPODmodes=args.numPODmodes,
         gp_regularizer=args.gpreg,
         ndraws=args.ndraws,
@@ -337,3 +337,5 @@ if __name__ == "__main__":
         openonsave=not args.noopen,
         ddtdata=args.ddtdata,
     )
+
+    # e.g., $ python main.py 0.06 200 0.01 100 6 

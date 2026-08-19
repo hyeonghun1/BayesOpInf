@@ -49,7 +49,7 @@ def trajectory(
             np.random.uniform(
                 training_span[0],
                 training_span[1],
-                size=num_samples,
+                size=num_samples, 
             )
         )
         time_domain[0] = training_span[0]

@@ -27,12 +27,12 @@ def _fit_single_gaussian_process(
     ----------
     stateindex : int
         Index of the state variable.
-    time_domain_training : (m,) ndarray
-        Time domain at which to estimate states and time derivatives
+    time_domain_training : (mprime,) ndarray
+        Time domain at which to estimate GP states and time derivatives
         for the parameter estimation.
-    time_domain_sampled : (mprime,) ndarray
+    time_domain_sampled : (m,) ndarray
         Time domain corresponding to the available training snapshots.
-    state_variable_sampled : (mprime,) ndarray
+    state_variable_sampled : (m,) ndarray
         Observations of a single state variable over the time domain
         ``time_domain_sampled``.
     gp_regularizer : float >= 0
@@ -75,14 +75,19 @@ def fit_gaussian_processes(
 
     Parameters
     ----------
-    time_domain_training : (m,) ndarray
-        Time domain at which to estimate states and time derivatives
+    time_domain_training : (mprime,) ndarray
+        Time domain at which to estimate GP states and time derivatives
         for the parameter estimation.
-    time_domain_sampled : (mprime,) ndarray
+    time_domain_sampled : (m,) ndarray
         Time domain corresponding to the available training snapshots.
-    snapshots_sampled : (NUMVARS, mprime) ndarray
+    snapshots_sampled : (NUMVARS, m) ndarray
         Available training snapshots.
     """
+    
+    print("m:", time_domain_sampled.size)
+    print("m':", time_domain_training.size)
+    
+    
     # Extract and validate dimensions.
     num_state_variables, sample_size = snapshots_sampled.shape
     if time_domain_sampled.size != sample_size:
